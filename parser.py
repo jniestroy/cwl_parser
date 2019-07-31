@@ -4,52 +4,79 @@ import yaml
 #inputs is yaml input file
 #parse_wf is main function
 def parse_wf(workflow,inputs):
+
     meta = {"@type":"wfdesc:Wokflow"}
+
     with open(workflow, 'r') as cwl_file:
         wf_dict = yaml.safe_load(cwl_file)
+
     if isinstance(inputs,dict):
         input_dict = inputs
+
     else :
         with open(inputs, 'r') as input_file:
             input_dict = yaml.safe_load(input_file)
+
     meta['wfdesc:hasInput'] = get_wf_inputs(wf_dict,input_dict)
+    #break wf into steps and add each to metadata
     meta.update(parse_steps(wf_dict.get('steps')))
+
     meta['wfdesc:hasOutput'] = get_outputs(wf_dict)
+
     return(meta)
 
 def parse_procss(process,inputs):
+
     meta = {"@type":"wfdesc:Process"}
+
     with open(workflow, 'r') as cwl_file:
         proc_dict = yaml.safe_load(cwl_file)
+
     with open(inputs, 'r') as input_file:
         input_dict = yaml.safe_load(input_file)
+
     meta['wfdesc:hasInput'] = get_wf_inputs(proc_dict,input_dict)
     meta['commandRun'] = proc_dict.get('baseCommand')
+    meta['wfdesc:hasOutput'] = get_outputs(wf_dict)
+
     return(meta)
 
 #Makes metadata for each step in a workflow
 #Breaks up steps into processes and SubWorkflows
 def parse_steps(steps):
+
     if steps == None:
         return({})
+
     steps_dict = {"wfdesc:hasProcess":[],"wfdesc:hasSubWorkflow":[]}
+
     for step in steps:
+
         try:
             with open(steps[step].get('run')) as f:
                 cwl_process = yaml.safe_load(f)
+
         except:
+
             steps_dict["wfdesc:hasProcess"].append(step)
             continue
+
         if cwl_process['class'] == 'Workflow':
+
             inputs = gather_inputs(steps[step])
             steps_dict['wfdesc:hasSubWorkflow'].append(parse_cwl(cwl_process,inputs))
+
         else:
+            #Grab Process inputs
             inputs = gather_inputs(steps[step])
+
             process = {"@type":"wfdesc:Process","name":step}
             process['commandRun'] = cwl_process.get('baseCommand')
+            #Add process inputs to dict
             process["wfdesc:hasInput"] = get_process_inputs(cwl_process,inputs)
             process["wfdesc:hasOutput"] = get_outputs(cwl_process)
             steps_dict["wfdesc:hasProcess"].append(process)
+
     return(steps_dict)
 #Giant disaster of function that reads inputs from workflow and grabs values
 #from the input yaml file
@@ -154,11 +181,16 @@ def get_process_inputs(workflow,inputs):
 
     return(hasInputs)
 
+#cwl changed from inputs to in in version 1.3 or 1.03
+#so since both are still acceptable function grabs input regardless of syntax
 def gather_inputs(step_dict):
+
     if step_dict.get('in'):
         return step_dict.get('in')
+
     elif step_dict.get('inputs'):
         return step_dict.get('inputs')
+
     return({})
 
 def get_outputs(workflow):
