@@ -1,0 +1,431 @@
+
+input_bam:
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:type: Dataset
+      schema:id: https://www.synapse.org/#!Synapse:syn10379294
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 1f5ef69f37538fed2b3cab3887f06ac2
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-16_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-16.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:type: Dataset
+      schema:id: https://www.synapse.org/#!Synapse:syn10379720
+      name: TYR-APPs1-25_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 3932f43a09891ab18304344f7c0d9c6d
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-25_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-25.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: https://www.synapse.org/#!Synapse:syn10380123
+      schema:name: TYR-APPs1-26_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 879231102f2949d4f0edc5e266fe9cbb
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-26_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-26.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380310
+      schema:url: https://www.synapse.org/#!Synapse:syn10380310
+      schema:name: TYR-APPs1-27_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: c1b1ab8486cb91e2976f6fe70a64afb2
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-27_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-27.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380384
+      schema:url: https://www.synapse.org/#!Synapse:syn10380384
+      schema:name: TYR-APPs1-34_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 2e94c88625b312eca76f2d7d6293c792
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-34_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-34.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380397
+      schema:url: https://www.synapse.org/#!Synapse:syn10380397
+      schema:name: TYR-APPs1-38_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 95c37cd99cab25719c4f08b52414236e
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-38_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-38.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380399
+      schema:url: https://www.synapse.org/#!Synapse:syn10380399
+      schema:name: TYR-APPs1-49_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 5a18d4ce7ac5202f9038eddc84c94990
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-49_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-49.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380400
+      schema:url: https://www.synapse.org/#!Synapse:syn10380400
+      schema:name: TYR-APPs1-51_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: dadb026a2f1ad2c813f3f04d892dbab8
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-51_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-51.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380405
+      schema:url: https://www.synapse.org/#!Synapse:syn10380405
+      schema:name: TYR-APPs1-54_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 88126cfdcad9c108d7331ee30277d5a9
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-54_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-54.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380409
+      schema:url: https://www.synapse.org/#!Synapse:syn10380409
+      schema:name: TYR-APPs1-60_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: eb1a68509c67932a707c6f38ab7f720d
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-60_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-60.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      schema:id: syn10380411
+      schema:url: https://www.synapse.org/#!Synapse:syn10380411
+      schema:name: TYR-APPs1-62_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: b07758fb2017918d19061a70c7ae40e0
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      class: File
+      path: BAM/TYR-APPs1-62_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-62.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380416
+      schema:url: https://www.synapse.org/syn10380416
+      schema:name: TYR-APPs1-65_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 62a18d501d4e92c19b4d02bd0c1405f3
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-65_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-65.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      schema:id: syn10378920
+      schema:url: https://www.synapse.org/#!Synapse:syn10378920
+      schema:name: TYR-APPs1-103_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 1cf4c438dd4b28468a21eb28b5546214
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      class: File
+      path: BAM/TYR-APPs1-103_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-103.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      schema:id: syn10379145
+      schema:url: https://www.synapse.org/#!Synapse:syn10379145
+      schema:name: TYR-APPs1-109_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 596f458569cd4ae1889ef467a95e30c6
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      class: File
+      path: BAM/TYR-APPs1-109_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-109.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379499
+      schema:url: https://www.synapse.org/#!Synapse:syn10379499
+      schema:name: TYR-APPs1-205_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 690be7019ec323cce95d38a88748f851
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-205_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-205.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379554
+      schema:url: https://www.synapse.org/#!Synapse:syn10379554
+      schema:name: TYR-APPs1-207_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 33d9f2fdc91d9668da26ac916bdd6288
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-207_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-207.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379565
+      schema:url: https://www.synapse.org/#!Synapse:syn10379565
+      schema:name: TYR-APPs1-222_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 8a674ada014da75a3e4fa73926c13f4c
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-222_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-222.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379568
+      schema:url: https://www.snyapse.org/#!Synapse:syn10379568
+      schema:name: TYR-APPs1-225_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 240a1e05303d1d4d2b67a693051bd97e
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-225_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-225.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379573
+      schema:url: https://www.synapse.org/#!Synapse:syn10379573
+      schema:name: TYR-APPs1-226_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: f596ee418c9ea0fcf09339f787a9eb09
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-226_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-226.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10379593
+      schema:url: https://www.synapse.org/#!Synapse:syn10379593
+      schema:name: TYR-APPs1-243_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: ba193303c5140ebf8efed9c1d75b49b1
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-243_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-243.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      schema:id: syn10379976
+      schema:url: https://www.synapse.org/#!Synapse:syn10379976
+      schema:name: TYR-APPs1-251_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: 4677e0aafc78a8fea1489fbc1275228b
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      class: File
+      path: BAM/TYR-APPs1-251_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-251.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380363
+      schema:url: https://www.synapse.org/#!Synapse:syn10380363
+      schema:name: TYR-APPs1-320_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: fdba230690c16be4aac5af9a0a3818b4
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-320_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-320.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380382
+      schema:url: https://www.synapse.org/#!Synapse:syn10380382
+      schema:name: TYR-APPs1-337_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: b7c0811186e2f3ee65fed8bb42c7d4dd
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-337_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-337.sam
+
+  - bam:
+      format: http://edamontology.org/format_2572
+      class: File
+      schema:id: syn10380395
+      schema:url: https://www.synapse.org/#!Synapse:syn10380395
+      schema:name: TYR-APPs1-351_Aligned.sortedByCoord.out.bam
+      schema:identifier:
+        - schema:type: schema:PropertyValue
+          schema:propertyID: md5
+          schema:value: fa2ec6f23d75e0b4f82ba46fb6e3014b
+      schema:author:
+        schema:type: Person
+        schema:name: Minghui Wang
+        schema:id: https://orcid.org/0000-0001-9171-4962
+        schema:email: minghui.wang@synapse.org
+      path: BAM/TYR-APPs1-351_Aligned.sortedByCoord.out.bam
+    output: TYR-APPs1-351.sam

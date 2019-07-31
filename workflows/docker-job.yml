@@ -1,0 +1,4 @@
+src:
+  class: File
+  path: calc_avg.py
+file_number: 1
