@@ -1,0 +1,22 @@
+TARBZFILE:
+  class: File
+  path: SRS020336.tar.bz2
+UNZIPPEDFILENAME: temp.tarbz.out
+stdoutflag: --to-stdout
+
+#stdinFile: SRS020336.tarbzout
+bowtie2db: /metaphlan/bowtie2db/mpa
+bowtie2exe: /bowtie2-2.2.5/bowtie2
+bt2: very-sensitive
+inputtype: multifastq
+bowtie2out: BM_input_fastq-1.bt2out
+OUTFILENAME: BM_input_fastq-1.txt
+
+profOut: BM_SRS013506.txt
+TREENAME: BM_SRS013506.tree.txt
+ANNOTNAME: BM_SRS013506.annot.txt
+
+ANNOTOUTNAME: BM_SRS013506.xml
+
+dpi: 200
+PNGFILE: BM_SRS013506.png

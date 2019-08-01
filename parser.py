@@ -3,36 +3,40 @@ import yaml
 #Accepts wf cwl File
 #inputs is yaml input file
 #parse_wf is main function
-def parse_wf(workflow,inputs):
+def parse_wf(workflow,inputs,path = ''):
+    meta = {
+        "@context":{"wfdesc":"https://wf4ever.github.io/ro/2016-01-28/wfdesc/"},
+        "@type":"wfdesc:Wokflow",
+        "name":workflow
+    }
 
-    meta = {"@type":"wfdesc:Wokflow"}
-
-    with open(workflow, 'r') as cwl_file:
+    with open(path + workflow, 'r') as cwl_file:
         wf_dict = yaml.safe_load(cwl_file)
 
     if isinstance(inputs,dict):
         input_dict = inputs
 
     else :
-        with open(inputs, 'r') as input_file:
+        with open(path + inputs, 'r') as input_file:
             input_dict = yaml.safe_load(input_file)
 
     meta['wfdesc:hasInput'] = get_wf_inputs(wf_dict,input_dict)
+
     #break wf into steps and add each to metadata
-    meta.update(parse_steps(wf_dict.get('steps')))
+    meta.update(parse_steps(wf_dict.get('steps'),path))
 
     meta['wfdesc:hasOutput'] = get_outputs(wf_dict)
 
     return(meta)
 
-def parse_procss(process,inputs):
+def parse_procss(process,inputs,path = ''):
 
     meta = {"@type":"wfdesc:Process"}
 
-    with open(workflow, 'r') as cwl_file:
+    with open(path + workflow, 'r') as cwl_file:
         proc_dict = yaml.safe_load(cwl_file)
 
-    with open(inputs, 'r') as input_file:
+    with open(path + inputs, 'r') as input_file:
         input_dict = yaml.safe_load(input_file)
 
     meta['wfdesc:hasInput'] = get_wf_inputs(proc_dict,input_dict)
@@ -43,34 +47,54 @@ def parse_procss(process,inputs):
 
 #Makes metadata for each step in a workflow
 #Breaks up steps into processes and SubWorkflows
-def parse_steps(steps):
+def parse_steps(steps,path):
 
     if steps == None:
         return({})
 
     steps_dict = {"wfdesc:hasProcess":[],"wfdesc:hasSubWorkflow":[]}
 
+    ####################
+    #
+    # Might need way of handling id and list of steps
+    # id for sure but looks like its still dict
+    #
+    #####################
+
     for step in steps:
+        if isinstance(step,dict):
+            try:
+                with open(path + step.get('run')) as f:
+                    cwl_process = yaml.safe_load(f)
+            except:
 
-        try:
-            with open(steps[step].get('run')) as f:
-                cwl_process = yaml.safe_load(f)
+                steps_dict["wfdesc:hasProcess"].append(step['id'])
+                continue
 
-        except:
+        else:
+            try:
+                with open(path + steps[step].get('run')) as f:
+                    cwl_process = yaml.safe_load(f)
 
-            steps_dict["wfdesc:hasProcess"].append(step)
-            continue
+            except:
+                steps_dict["wfdesc:hasProcess"].append(step)
+                continue
 
         if cwl_process['class'] == 'Workflow':
-
-            inputs = gather_inputs(steps[step])
+            if isinstance(steps,list):
+                inputs = gather_inputs(step)
+            else:
+                inputs = gather_inputs(steps[step])
             steps_dict['wfdesc:hasSubWorkflow'].append(parse_cwl(cwl_process,inputs))
 
         else:
             #Grab Process inputs
-            inputs = gather_inputs(steps[step])
-
-            process = {"@type":"wfdesc:Process","name":step}
+            if isinstance(steps,list):
+                inputs = gather_inputs(step)
+                process = {"@type":"wfdesc:Process","name":step.get('id')}
+            else:
+                inputs = gather_inputs(steps[step])
+                process = {"@type":"wfdesc:Process","name":step}
             process['commandRun'] = cwl_process.get('baseCommand')
             #Add process inputs to dict
             process["wfdesc:hasInput"] = get_process_inputs(cwl_process,inputs)
@@ -83,8 +107,68 @@ def parse_steps(steps):
 def get_wf_inputs(workflow,inputs):
 
     hasInputs = []
-
     try:
+
+        if isinstance(gather_inputs(workflow),list):
+
+            for inp in gather_inputs(workflow):
+                input_dict = {
+                    "@type":"wfdesc:Parameter",
+                    "name":inp['id']
+                }
+
+                if isinstance(inp.get('type'),dict):
+                    input_dict['datatype'] = inp.get('type').get('type')
+                else:
+                    input_dict['datatype'] = inp.get('type')
+
+                if input_dict.get("datatype") == 'File':
+                    input_dict['file'] = inputs.get(inp['id']).get('path')
+                #if the datatype is array things get messy
+                #need to rewrite this section and make function instead of below
+                elif input_dict['datatype'] == 'array':
+
+                    #make items key to store all elements of input array
+                    #item_struct is the structure of each element taken from
+                    #the wf definition file
+                    input_dict['items'] = []
+                    #reason for all the gets is thats where it was in rna.yaml
+                    item_struct = inp.get('type').get('items').get('fields')
+                    #for loop over each element in the given inputs file
+                    for item in inputs.get(inp['id']):
+
+                        #Since an item in array can have multiple elements for loop
+                        #through them all
+                        elements = []
+                        for element in item_struct:
+
+                            element_dict = {"@type":"wfdesc:Parameter",
+                                           "name":element,
+                                           "datatype":item_struct[element].get('type')
+                                           }
+
+                            if element_dict.get("datatype") == 'File':
+                                element_dict['file'] = item[element].get('path')
+                            else:
+                                element_dict['value'] = item[element]
+
+                            elements.append(element_dict)
+
+                        input_dict['items'].append(elements)
+
+                else:
+                    input_dict['value'] = inputs.get(inp['id'])
+
+                hasInputs.append(input_dict)
+            return(hasInputs)
+
+        #######################
+        #
+        #TODO: Add for functionality for list of inputs has id has name
+        #preferably break up into a couple of functions failing and 2nd_input
+        #
+        #########################
+
 
         #input name is key in dictionary
         #input name should be name of individual input
@@ -92,6 +176,7 @@ def get_wf_inputs(workflow,inputs):
         #if input is not array datatype is the inputs type
         #otherwise its a dictionary with all the type information about
         #that input
+
         for input_name, datatype in gather_inputs(workflow).items():
 
             input_dict = {
@@ -112,7 +197,7 @@ def get_wf_inputs(workflow,inputs):
                         input_dict['datatype'] = datatype.get('type')
             else:
                  input_dict['datatype'] = datatype
-                 
+
             if input_dict.get("datatype") == 'File':
                 input_dict['file'] = inputs.get(input_name).get('path')
             #if the datatype is array things get messy
@@ -198,6 +283,17 @@ def gather_inputs(step_dict):
 def get_outputs(workflow):
     hasOutputs = []
     try:
+        if isinstance(gather_outputs(workflow),list):
+            for output in gather_outputs(workflow):
+                output_dict = {
+                    "@type":"wfdesc:Parameter",
+                    "name":output.get('id'),
+                    "datatype":output.get("type")
+                }
+                if output.get('outputSource'):
+                    output_dict['outputSource'] = output.get('outputSource')
+                hasOutputs.append(output_dict)
+            return(hasOutputs)
         for output_name, datatype in gather_outputs(workflow).items():#workflow.get('inputs').items():
             output_dict = {
                 "@type":"wfdesc:Parameter",

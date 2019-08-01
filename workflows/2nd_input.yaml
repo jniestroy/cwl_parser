@@ -1,0 +1,12 @@
+bwa_index:
+  class: File
+  path: https://storage.googleapis.com/topmed_workflow_testing/topmed_aligner/reference_files/hg38/hs38DH.fa.tar
+dbsnp:
+  class: File
+  path: https://storage.googleapis.com/topmed_workflow_testing/topmed_aligner/reference_files/hg38/Homo_sapiens_assembly38.dbsnp138.vcf.gz
+input_file:
+  class: File
+  path: ttps://storage.googleapis.com/topmed_workflow_testing/topmed_aligner/input_files/NWD176325.0005.recab.cra
+reference_genome:
+  class: File
+  path: Looks like above
