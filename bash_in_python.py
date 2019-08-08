@@ -4,24 +4,41 @@ import subprocess
 import json
 import wf_meta as wf
 from minio import Minio
+import wf_uploader as wf_upload
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou,BucketAlreadyExists)
-
+import tempfile
+import shutil
 #Create wf metadata
 #Run Workflow
 #Create Output Object metadata
 #Post Output Objects to Minio
-def workflow(inputs):
-
-    if len(inputs) >= 4:
-        path = inputs[3]
-
-    else:
-        path = ''
+def workflow_main(inputs):
 
     workflow = inputs[1]
     yaml = inputs[2]
+    path = inputs[3]
 
+    if path == 'minio':
+
+        path = str(os.getcwd()) + '/tmp12345/'
+        path1= str(os.getcwd()) + '/tmp12345/'
+        os.mkdir(path)
+
+        valid = run_wf_minio(workflow,yaml,path)
+
+        if not valid:
+
+            return({"error":"Not all required objects found on Minio"})
+
+        result = workflow_main(['tes',workflow,yaml,path])
+
+        shutil.rmtree(path1)
+
+        return(result)
+
+    #print("Path is " + path)
     wf_metadata = wf.generate_wf_meta(workflow,path)
+
 
     if not isinstance(wf_metadata,dict):
         return({"result":"Workflow not found please check path"})
@@ -34,16 +51,19 @@ def workflow(inputs):
 
     else:
         print("Workflow Failed to run.\n" + str(wf_result['output']))
-        return
+        return({"error":"Workflow failed to run","cwltool output":str(wf_result['output'])})
 
     result = {"wfprov:WorkflowRun":wf_metadata}
     result['outputs'] = {}
 
     for output in output_meta:
-        if upload_file_minio(output['path'],output):
+
+        if wf_upload.upload_file_minio(output['path'],output):
             result['outputs'][output['name']] = {'upload':"success","object_meta":output}
+
         else:
             result['outputs'][output['name']] = {"upload":"failed"}
+
     return(result)
 
 #run cwl-tool in python via subprocess
@@ -69,31 +89,7 @@ def run_workflow(workflow,yaml,path):
     else:
         return({"success":False,"output":str(stdout)})
 
-def upload_file_minio(file,output_metadata):
 
-    filename = get_filename(file)
-
-    meta = {'name':output_metadata['name']}
-
-    f = open(file,"rb")
-
-    minioClient = Minio('127.0.0.1:9000',
-        access_key='92WUKA7ZAP4M3UOS0TNG',
-        secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
-        secure=False)
-
-    f.seek(0, os.SEEK_END)
-    size = f.tell()
-    f.seek(0)
-
-    try:
-           minioClient.put_object('testbucket', filename, f,size,metadata = meta)
-
-    except ResponseError as err:
-           return False
-
-    #f.save(secure_filename(f.filename))
-    return True
 
 #Takes metadata about output from wf and output once wf is run
 def generate_output_meta(wf_output,corresponding_wf_meta,workflow,yaml,path):
@@ -160,8 +156,55 @@ def parse_stdout(stdout):
 def get_filename(full_path):
     return(full_path.split('/')[len(full_path.split('/')) -1 ])
 
+def run_wf_minio(workflow_name,job,path):
+
+    minioClient = Minio('127.0.0.1:9000',
+        access_key='92WUKA7ZAP4M3UOS0TNG',
+        secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
+        secure=False)
+
+    try:
+        data = minioClient.get_object('testbucket', "workflows/" + workflow_name)
+        with open(path + workflow_name, 'wb') as file_data:
+            for d in data.stream(32*1024):
+                file_data.write(d)
+
+    except ResponseError as err:
+        print(err)
+        return(False)
+    try:
+        data = minioClient.get_object('testbucket', "jobs/" + job)
+        with open(path + job, 'wb') as file_data:
+            for d in data.stream(32*1024):
+                file_data.write(d)
+
+    except ResponseError as err:
+        print(err)
+        return(False)
+
+
+    processes = wf.generate_wf_meta(workflow_name,path).get('wfdesc:hasProcess')
+
+    if processes == None:
+        return(True)
+
+    for process in processes:
+        commandLineTool = process.get('run')
+        try:
+            data = minioClient.get_object('testbucket', "commandLineTools/" + commandLineTool)
+            with open(path + commandLineTool, 'wb') as file_data:
+                for d in data.stream(32*1024):
+                    file_data.write(d)
+
+        except ResponseError as err:
+            print(err)
+            return(False)
+
+    return(True)
+
+
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
-        print(workflow(sys.argv))
+        print(workflow_main(sys.argv))
     else:
         print("Not enough inputs given to run workflow.")
