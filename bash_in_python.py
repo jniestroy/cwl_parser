@@ -203,8 +203,8 @@ def run_wf_minio(workflow_name,job,path):
     return(True)
 
 
-if __name__ == "__main__":
-    if len(sys.argv) >= 3:
-        print(workflow_main(sys.argv))
-    else:
-        print("Not enough inputs given to run workflow.")
+# if __name__ == "__main__":
+#     if len(sys.argv) >= 3:
+#         print(workflow_main(sys.argv))
+#     else:
+#         print("Not enough inputs given to run workflow.")
