@@ -13,8 +13,9 @@ inputs:
     inputBinding:
       position: 2
 
-stdout: cwl.output.json
+
 
 outputs:
   answer:
-    type: int
+    type: stdout
+stdout: output_test1.txt

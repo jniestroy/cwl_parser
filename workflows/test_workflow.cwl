@@ -6,7 +6,7 @@ inputs:
   num2: int
 outputs:
   final_answer:
-    type: int
+    type: File
     outputSource: multiply/answer
 steps:
   add:

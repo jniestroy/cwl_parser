@@ -9,10 +9,11 @@ def generate_wf_meta(workflow,path = ''):
         "name":workflow
 
     }
-
-    with open(path + workflow, 'r') as cwl_file:
-        wf_dict = yaml.safe_load(cwl_file)
-
+    try:
+        with open(path + workflow, 'r') as cwl_file:
+            wf_dict = yaml.safe_load(cwl_file)
+    except:
+        return("Workflow File does not Exist")
     #Grab Inputs into Workflow
 
     inputs = get_inputs(wf_dict)
@@ -232,7 +233,9 @@ def get_dict_inputs(inputs):
                         input_dict['datatype'] = datatype.get('type')
 
             else:
-                 input_dict['datatype'] = datatype
+                input_dict['datatype'] = datatype
+        else:
+            input_dict['datatype'] = inputs[input_name]
 
         input_list.append(input_dict)
 
@@ -258,6 +261,21 @@ def gather_outputs(step_dict):
         return step_dict.get('outputs')
 
     return({})
+
+def update_input_values(workflow,yamlfile,path):
+    with open(path + yamlfile, 'r') as cwl_file:
+        input_dict = yaml.safe_load(cwl_file)
+    for inp in workflow['wfdesc:hasInput']:
+        input_name = inp['name']
+        file_type = inp['datatype']
+        if file_type == 'File':
+            inp['path'] = input_dict[input_name]['path']
+        elif file_type == 'Array':
+            continue
+        else:
+            inp['value'] = input_dict[input_name]
+    return(workflow)
+
 
 def pull_schema_meta(workflow,path):
 
