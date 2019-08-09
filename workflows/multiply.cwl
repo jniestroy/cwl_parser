@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ["python3", "/Users/justinniestroy-admin/Documents/Work/Randall Data/houlter data/multiply.py"]
+baseCommand: ["python3", "/multiply.py"]
 
 inputs:
   x:

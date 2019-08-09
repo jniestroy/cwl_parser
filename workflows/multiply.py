@@ -1,13 +1,13 @@
-import click
+
 import json
+import sys
 
 
-@click.command()
-@click.argument('x', type=int)
-@click.argument('y', type=int)
 def multiply(x, y):
-    click.echo(json.dumps({'answer': x*y}))
+    x = inputs[1]
+    y = inputs[2]
+    print(x*y)
 
 
 if __name__ == '__main__':
-    multiply()
+    multiply(sys.argv)

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  cwlrunner:
+    build: .
+    ports:
+      - "5002:5002"
+  validator:
+    image: jniestroy/json_validation
+    ports:
+      - "5000:5000"
+
+  minio:
+      image: minio/minio
+      command: ["server", "/data"]
+      ports:
+        - "9000:9000"
+      environment:
+        - MINIO_DOCKER_NAME=minio
+        - MINIO_ACCESS_KEY=Minio
+        - MINIO_SECRET_KEY=secret123

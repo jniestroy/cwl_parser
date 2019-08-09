@@ -277,10 +277,12 @@ def update_input_values(workflow,yamlfile,path):
     return(workflow)
 
 
-def pull_schema_meta(workflow,path):
-
-    with open(path + workflow, 'r') as cwl_file:
-        wf_dict = yaml.safe_load(cwl_file)
+def pull_schema_meta(workflow,path = '',bytes = False):
+    if not bytes:
+        with open(path + workflow, 'r') as cwl_file:
+            wf_dict = yaml.safe_load(cwl_file)
+    else:
+        wf_dict = yaml.safe_load(workflow)
 
     outputs = gather_outputs(wf_dict)
 

@@ -6,11 +6,16 @@ import subprocess
 import json
 import wf_meta as wf
 
-def upload_cwl(cwl,path,isWorkflow = True,isJob = False):
+def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
+    print(isJob)
+    if not bytes:
+        file = path + cwl
 
-    file = path + cwl
-
-    filename = get_filename(file)
+        filename = get_filename(file)
+        f = open(file,"rb")
+    else:
+        f = cwl
+        filename = f.name
 
     if isWorkflow:
         folder = "workflows/"
@@ -19,12 +24,15 @@ def upload_cwl(cwl,path,isWorkflow = True,isJob = False):
     else:
         folder = "commandLineTools/"
 
-    f = open(file,"rb")
 
-    minioClient = Minio('127.0.0.1:9000',
-        access_key='92WUKA7ZAP4M3UOS0TNG',
-        secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
-        secure=False)
+    minioClient = Minio('minio:9000',
+            access_key='Minio',
+            secret_key='secret123',
+            secure=False)
+    # minioClient = Minio('127.0.0.1:9000',
+    #     access_key='92WUKA7ZAP4M3UOS0TNG',
+    #     secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
+    #     secure=False)
 
     f.seek(0, os.SEEK_END)
     size = f.tell()
@@ -48,10 +56,10 @@ def upload_file_minio(file,output_metadata):
 
     f = open(file,"rb")
 
-    minioClient = Minio('127.0.0.1:9000',
-        access_key='92WUKA7ZAP4M3UOS0TNG',
-        secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
-        secure=False)
+    minioClient = Minio('minio:9000',
+            access_key='Minio',
+            secret_key='secret123',
+            secure=False)
 
     f.seek(0, os.SEEK_END)
     size = f.tell()

@@ -8,6 +8,7 @@ import wf_uploader as wf_upload
 from minio.error import (ResponseError, BucketAlreadyOwnedByYou,BucketAlreadyExists)
 import tempfile
 import shutil
+import yaml
 #Create wf metadata
 #Run Workflow
 #Create Output Object metadata
@@ -20,9 +21,13 @@ def workflow_main(inputs):
 
     if path == 'minio':
 
-        path = str(os.getcwd()) + '/tmp12345/'
-        path1= str(os.getcwd()) + '/tmp12345/'
-        os.mkdir(path)
+        path = str(os.getcwd()) + 'randompaththatshouldntexist12345/'
+        path1= str(os.getcwd()) + 'randompaththatshouldntexist12345/'
+        try:
+            os.mkdir(path)
+        except:
+            shutil.rmtree(path1)
+            os.mkdir(path)
 
         valid = run_wf_minio(workflow,yaml,path)
 
@@ -32,12 +37,13 @@ def workflow_main(inputs):
 
         result = workflow_main(['tes',workflow,yaml,path])
 
-        shutil.rmtree(path1)
+        #shutil.rmtree(path1)
 
         return(result)
 
     #print("Path is " + path)
     wf_metadata = wf.generate_wf_meta(workflow,path)
+
 
 
     if not isinstance(wf_metadata,dict):
@@ -71,6 +77,7 @@ def run_workflow(workflow,yaml,path):
 
     if path != '':
         os.chdir(path)
+
 
     cmd = 'cwltool'
 
@@ -158,10 +165,10 @@ def get_filename(full_path):
 
 def run_wf_minio(workflow_name,job,path):
 
-    minioClient = Minio('127.0.0.1:9000',
-        access_key='92WUKA7ZAP4M3UOS0TNG',
-        secret_key='uIgJzgatEyop9ZKWfRDSlgkAhDtOzJdF+Jw+N9FE',
-        secure=False)
+    minioClient = Minio('minio:9000',
+            access_key='Minio',
+            secret_key='secret123',
+            secure=False)
 
     try:
         data = minioClient.get_object('testbucket', "workflows/" + workflow_name)
@@ -198,6 +205,8 @@ def run_wf_minio(workflow_name,job,path):
 
         except ResponseError as err:
             print(err)
+            return(False)
+        except:
             return(False)
 
     return(True)

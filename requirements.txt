@@ -3,3 +3,8 @@ flask
 uwsgi
 minio
 pyyaml
+cwltool
+html5lib
+pandas
+numpy
+matplotlib
