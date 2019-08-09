@@ -5,7 +5,7 @@ baseCommand: ["python3", "/multiply.py"]
 
 inputs:
   x:
-    type: int
+    type: File
     inputBinding:
       position: 1
   y:

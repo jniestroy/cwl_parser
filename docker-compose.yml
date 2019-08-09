@@ -4,10 +4,22 @@ services:
     build: .
     ports:
       - "5002:5002"
+    environment:
+      - MINIO_DOCKER_NAME=minio:9000
+      - MINIO_ACCESS_KEY=Minio
+      - MINIO_SECRET_KEY=secret123
   validator:
     image: jniestroy/json_validation
     ports:
       - "5000:5000"
+  dataset_service:
+    image: jniestroy/dataset_service
+    ports:
+      - "5005:5005"
+    environment:
+      - MINIO_DOCKER_NAME=minio:9000
+      - MINIO_ACCESS_KEY=Minio
+      - MINIO_SECRET_KEY=secret123
 
   minio:
       image: minio/minio
@@ -18,3 +30,9 @@ services:
         - MINIO_DOCKER_NAME=minio
         - MINIO_ACCESS_KEY=Minio
         - MINIO_SECRET_KEY=secret123
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo_secret

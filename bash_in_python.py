@@ -9,6 +9,11 @@ from minio.error import (ResponseError, BucketAlreadyOwnedByYou,BucketAlreadyExi
 import tempfile
 import shutil
 import yaml
+
+minio_name = os.environ['MINIO_DOCKER_NAME']
+minio_key = os.environ['MINIO_ACCESS_KEY']
+minio_secret = os.environ["MINIO_SECRET_KEY"]
+
 #Create wf metadata
 #Run Workflow
 #Create Output Object metadata
@@ -165,9 +170,9 @@ def get_filename(full_path):
 
 def run_wf_minio(workflow_name,job,path):
 
-    minioClient = Minio('minio:9000',
-            access_key='Minio',
-            secret_key='secret123',
+    minioClient = Minio(minio_name,
+            access_key=minio_key,
+            secret_key=minio_secret,
             secure=False)
 
     try:

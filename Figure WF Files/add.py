@@ -3,8 +3,8 @@ import sys
 
 
 def add(inputs):
-    x = inputs[1]
-    y = inputs[2]
+    x = int(inputs[1])
+    y = int(inputs[2])
     print(x+y)
 
 

@@ -9,6 +9,10 @@ import yaml
 
 app = Flask(__name__)
 
+minio_name = os.environ['MINIO_DOCKER_NAME']
+minio_key = os.environ['MINIO_ACCESS_KEY']
+minio_secret = os.environ["MINIO_SECRET_KEY"]
+
 @app.route('/', methods=['GET'])
 def homepage():
 

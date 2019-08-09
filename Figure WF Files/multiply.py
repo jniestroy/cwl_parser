@@ -6,7 +6,7 @@ import sys
 def multiply(inputs):
     x = inputs[1]
     with open(x) as f:
-        x1 = x.read()
+        x1 = int(f.read())
     y = int(inputs[2])
     print(x1*y)
 

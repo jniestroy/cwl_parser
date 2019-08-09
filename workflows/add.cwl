@@ -13,7 +13,7 @@ inputs:
     inputBinding:
       position: 2
 
-
+stdout: ans.txt
 outputs:
   answer:
     type: stdout

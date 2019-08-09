@@ -9,5 +9,8 @@ RUN apt-get install -y uwsgi-plugin-python3
 RUN apt-get install -y uwsgi-plugin-python
 COPY http.ini .
 COPY . .
+ENV MINIO_DOCKER_NAME=minio:9000
+ENV MINIO_ACCESS_KEY=Minio
+ENV MINIO_SECRET_KEY=secret123
 EXPOSE 5002
 ENTRYPOINT [ "uwsgi", "--ini", "http.ini"]
