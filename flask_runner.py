@@ -55,18 +55,24 @@ def post_wf():
     output_meta = wf_parser.pull_schema_meta(workflow,bytes = True)
 
     for output in output_meta:
+
         URL = "http://validator:5000/validatejson"
         req = requests.post(url = URL,json = output)
-        print(req.json())
         valid = req.json()['valid']
-        valid = True
-        #valid = True
+
         if not valid:
             return(jsonify({"error":str(output.get('name')) + " missing required schema properties or invalid",
             "upload":False,
             "validation_result":req.json()['error']}))
 
+    wf_metadata = wf_parser.generate_wf_meta(workflow,bytes = True)
+
+    ####################
+    #Post wf to mongo
+    ####################
+    
     if wf_upload.upload_cwl(workflow,isWorkflow = True,bytes = True):
+
         for tool in commandTools:
             if wf_upload.upload_cwl(tool,isWorkflow = False,bytes = True):
                 continue

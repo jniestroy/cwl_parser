@@ -11,7 +11,7 @@ minio_key = os.environ['MINIO_ACCESS_KEY']
 minio_secret = os.environ["MINIO_SECRET_KEY"]
 
 def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
-    print(isJob)
+
     if not bytes:
         file = path + cwl
 

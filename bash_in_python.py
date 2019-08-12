@@ -69,6 +69,12 @@ def workflow_main(inputs):
 
     for output in output_meta:
 
+        ###############################
+        #
+        #Post object metadata to mongo
+        #
+        ###############################
+
         if wf_upload.upload_file_minio(output['path'],output):
             result['outputs'][output['name']] = {'upload':"success","object_meta":output}
 

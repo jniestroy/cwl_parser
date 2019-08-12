@@ -1,6 +1,6 @@
 import yaml
 
-def generate_wf_meta(workflow,path = ''):
+def generate_wf_meta(workflow,path = '',bytes = True):
 
     meta = {
 
@@ -9,11 +9,16 @@ def generate_wf_meta(workflow,path = ''):
         "name":workflow
 
     }
-    try:
-        with open(path + workflow, 'r') as cwl_file:
-            wf_dict = yaml.safe_load(cwl_file)
-    except:
-        return("Workflow File does not Exist")
+
+    if bytes:
+        wf_dict = yaml.safe_load(workflow)
+
+    else:
+        try:
+            with open(path + workflow, 'r') as cwl_file:
+                wf_dict = yaml.safe_load(cwl_file)
+        except:
+            return("Workflow File does not Exist")
     #Grab Inputs into Workflow
 
     inputs = get_inputs(wf_dict)
