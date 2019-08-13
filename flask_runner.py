@@ -78,7 +78,7 @@ def post_wf():
 
     wf_metadata = wf_parser.generate_wf_meta(wf_dict,bytes = True,name=workflow.name)
 
-    req = requests.put("https://ors:8080/uid/test/",json = output,verify = False)
+    req = requests.put("https://ors:8080/uid/test/",json = wf_metadata,verify = False)
 
     if req.json().get('created'):
 
@@ -92,7 +92,7 @@ def post_wf():
     #Post wf to mongo
     ####################
 
-    if wf_upload.upload_cwl(workflow,isWorkflow = True,bytes = True,id):
+    if wf_upload.upload_cwl(workflow,isWorkflow = True,bytes = True,id = id):
 
         for tool in commandTools:
 

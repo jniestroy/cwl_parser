@@ -9,6 +9,7 @@ from minio.error import (ResponseError, BucketAlreadyOwnedByYou,BucketAlreadyExi
 import tempfile
 import shutil
 import yaml
+import requests
 
 minio_name = os.environ['MINIO_DOCKER_NAME']
 minio_key = os.environ['MINIO_ACCESS_KEY']

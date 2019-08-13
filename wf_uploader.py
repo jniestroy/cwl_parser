@@ -45,7 +45,7 @@ def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False,id =
     f.seek(0)
 
     try:
-           minioClient.put_object('testbucket', folder + filename, f,size,metadata = {"name":filename,'id' = id})
+           minioClient.put_object('testbucket', folder + filename, f,size,metadata = {"name":filename,'id':id})
 
     except ResponseError as err:
            return False
@@ -118,7 +118,7 @@ def upload_file_minio(file,output_metadata):
 
     meta = {
             'name':output_metadata['name'],
-            'identifier':output_meta['identifier']
+            'identifier':output_metadata['identifier']
             }
 
     f = open(file,"rb")
