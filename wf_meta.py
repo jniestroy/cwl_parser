@@ -1,22 +1,24 @@
 import yaml
 
-def generate_wf_meta(workflow,path = '',bytes = True):
+def generate_wf_meta(workflow,path = '',bytes = False,name = ''):
 
     meta = {
 
         "@context":{"wfdesc":"https://wf4ever.github.io/ro/2016-01-28/wfdesc/"},
-        "@type":"wfdesc:Wokflow",
-        "name":workflow
+        "@type":"wfdesc:Wokflow"
 
     }
 
     if bytes:
-        wf_dict = yaml.safe_load(workflow)
+        wf_dict = workflow
+        meta['name'] = name
 
     else:
+
         try:
             with open(path + workflow, 'r') as cwl_file:
                 wf_dict = yaml.safe_load(cwl_file)
+                meta['name'] = workflow
         except:
             return("Workflow File does not Exist")
     #Grab Inputs into Workflow
@@ -128,6 +130,8 @@ def get_outputs(workflow):
     return(hasOutputs)
 
 def get_inputs(workflow):
+
+    
 
     inputs = gather_inputs(workflow)
 
@@ -287,7 +291,7 @@ def pull_schema_meta(workflow,path = '',bytes = False):
         with open(path + workflow, 'r') as cwl_file:
             wf_dict = yaml.safe_load(cwl_file)
     else:
-        wf_dict = yaml.safe_load(workflow)
+        wf_dict = workflow
 
     outputs = gather_outputs(wf_dict)
 
