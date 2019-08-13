@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ["python3","/add.py"]
+baseCommand: ["python3","/Figure WF Files/add.py"]
 
 inputs:
   x:

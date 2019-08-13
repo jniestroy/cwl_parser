@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ["python3", "/multiply.py"]
+baseCommand: ["python3", "/Figure WF Files/multiply.py"]
 
 inputs:
   x:
