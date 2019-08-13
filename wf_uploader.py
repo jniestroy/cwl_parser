@@ -13,11 +13,13 @@ minio_secret = os.environ["MINIO_SECRET_KEY"]
 def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
 
     if not bytes:
-        file = path + cwl
 
+        file = path + cwl
         filename = get_filename(file)
         f = open(file,"rb")
+
     else:
+
         f = cwl
         filename = f.name
 
@@ -51,6 +53,64 @@ def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
     #f.save(secure_filename(f.filename))
     return True
 
+def get_wf_minio(workflow_name,job,path):
+
+    minioClient = Minio(minio_name,
+            access_key=minio_key,
+            secret_key=minio_secret,
+            secure=False)
+
+    try:
+        data = minioClient.get_object('testbucket', "workflows/" + workflow_name)
+        with open(path + workflow_name, 'wb') as file_data:
+            for d in data.stream(32*1024):
+                file_data.write(d)
+
+    except ResponseError as err:
+
+        print(err)
+        return(False)
+
+    try:
+
+        data = minioClient.get_object('testbucket', "jobs/" + job)
+
+        with open(path + job, 'wb') as file_data:
+            for d in data.stream(32*1024):
+                file_data.write(d)
+
+    except ResponseError as err:
+
+        print(err)
+        return(False)
+
+
+    processes = wf.generate_wf_meta(workflow_name,path).get('wfdesc:hasProcess')
+
+    if processes == None:
+        return(True)
+
+    for process in processes:
+
+        commandLineTool = process.get('run')
+
+        try:
+
+            data = minioClient.get_object('testbucket', "commandLineTools/" + commandLineTool)
+
+            with open(path + commandLineTool, 'wb') as file_data:
+                for d in data.stream(32*1024):
+                    file_data.write(d)
+
+        except ResponseError as err:
+
+            print(err)
+            return(False)
+
+        except:
+            return(False)
+
+    return(True)
 
 def upload_file_minio(file,output_metadata):
 

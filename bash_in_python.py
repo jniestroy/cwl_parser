@@ -36,7 +36,7 @@ def workflow_main(inputs):
             shutil.rmtree(path1)
             os.mkdir(path)
 
-        valid = run_wf_minio(workflow,yaml,path)
+        valid = wf_upload.get_wf_minio(workflow,yaml,path)
 
         if not valid:
 
@@ -195,64 +195,7 @@ def parse_stdout(stdout):
 def get_filename(full_path):
     return(full_path.split('/')[len(full_path.split('/')) -1 ])
 
-def run_wf_minio(workflow_name,job,path):
 
-    minioClient = Minio(minio_name,
-            access_key=minio_key,
-            secret_key=minio_secret,
-            secure=False)
-
-    try:
-        data = minioClient.get_object('testbucket', "workflows/" + workflow_name)
-        with open(path + workflow_name, 'wb') as file_data:
-            for d in data.stream(32*1024):
-                file_data.write(d)
-
-    except ResponseError as err:
-
-        print(err)
-        return(False)
-
-    try:
-
-        data = minioClient.get_object('testbucket', "jobs/" + job)
-
-        with open(path + job, 'wb') as file_data:
-            for d in data.stream(32*1024):
-                file_data.write(d)
-
-    except ResponseError as err:
-
-        print(err)
-        return(False)
-
-
-    processes = wf.generate_wf_meta(workflow_name,path).get('wfdesc:hasProcess')
-
-    if processes == None:
-        return(True)
-
-    for process in processes:
-
-        commandLineTool = process.get('run')
-
-        try:
-
-            data = minioClient.get_object('testbucket', "commandLineTools/" + commandLineTool)
-
-            with open(path + commandLineTool, 'wb') as file_data:
-                for d in data.stream(32*1024):
-                    file_data.write(d)
-
-        except ResponseError as err:
-
-            print(err)
-            return(False)
-
-        except:
-            return(False)
-
-    return(True)
 
 
 # if __name__ == "__main__":
