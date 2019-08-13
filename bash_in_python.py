@@ -28,8 +28,10 @@ def workflow_main(inputs):
 
         path = str(os.getcwd()) + 'randompaththatshouldntexist12345/'
         path1= str(os.getcwd()) + 'randompaththatshouldntexist12345/'
+
         try:
             os.mkdir(path)
+
         except:
             shutil.rmtree(path1)
             os.mkdir(path)
@@ -52,6 +54,7 @@ def workflow_main(inputs):
 
 
     if not isinstance(wf_metadata,dict):
+
         return({"result":"Workflow not found please check path"})
 
     wf_result = run_workflow(workflow,yaml,path)
@@ -61,10 +64,13 @@ def workflow_main(inputs):
         output_meta = generate_output_meta(wf_result['output'],wf_metadata,workflow,yaml,path)
 
     else:
+
         print("Workflow Failed to run.\n" + str(wf_result['output']))
+
         return({"error":"Workflow failed to run","cwltool output":str(wf_result['output'])})
 
     result = {"wfprov:WorkflowRun":wf_metadata}
+
     result['outputs'] = {}
 
     for output in output_meta:
@@ -188,15 +194,20 @@ def run_wf_minio(workflow_name,job,path):
                 file_data.write(d)
 
     except ResponseError as err:
+
         print(err)
         return(False)
+
     try:
+
         data = minioClient.get_object('testbucket', "jobs/" + job)
+
         with open(path + job, 'wb') as file_data:
             for d in data.stream(32*1024):
                 file_data.write(d)
 
     except ResponseError as err:
+
         print(err)
         return(False)
 
@@ -207,16 +218,22 @@ def run_wf_minio(workflow_name,job,path):
         return(True)
 
     for process in processes:
+
         commandLineTool = process.get('run')
+
         try:
+
             data = minioClient.get_object('testbucket', "commandLineTools/" + commandLineTool)
+
             with open(path + commandLineTool, 'wb') as file_data:
                 for d in data.stream(32*1024):
                     file_data.write(d)
 
         except ResponseError as err:
+
             print(err)
             return(False)
+
         except:
             return(False)
 
