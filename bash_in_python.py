@@ -37,11 +37,11 @@ def workflow_main(inputs):
             shutil.rmtree(path1)
             os.mkdir(path)
 
-        valid = wf_upload.get_wf_minio(workflow,yaml,path)
+        valid,item = wf_upload.get_wf_minio(workflow,yaml,path)
 
         if not valid:
 
-            return({"error":"Not all required objects found on Minio"})
+            return({"error":item + " found on Minio"})
 
         result = workflow_main(['tes',workflow,yaml,path])
 
