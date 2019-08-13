@@ -152,28 +152,43 @@ def combine_meta(schema_meta,wf_meta,wf_output):
 
 
 def parse_stdout(stdout):
+
     start = 0
     count = 0
     check = 0
+
     output = ''
+
     for element in stdout:
+
         if element == '{':
+
             start = 1
             count = count + 1
+
         if start == 1:
             #new lines were causing problems and
             #not removable with replace
+
             if element == '\\':
+
                 check = 1
                 continue
+
             if element == 'n' and check == 1:
+
                 check = 0
                 continue
+
             output = output + element
+
         if element == '}':
+
             count = count - 1
+
             if count == 0:
                 start = 0
+
     #output = output.strip('\n')
     return(json.loads(str(output)))
 
