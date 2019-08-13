@@ -69,7 +69,9 @@ def get_wf_minio(workflow_name,job,path):
     except ResponseError as err:
 
         print(err)
-        return(False)
+        return(False,'Workflow')
+    except:
+        return(False,"Workflow")
 
     try:
 
@@ -82,13 +84,16 @@ def get_wf_minio(workflow_name,job,path):
     except ResponseError as err:
 
         print(err)
-        return(False)
+        return(False,'Job')
+
+    except:
+        return(False,'Job')
 
 
     processes = wf.generate_wf_meta(workflow_name,path).get('wfdesc:hasProcess')
 
     if processes == None:
-        return(True)
+        return(True,'')
 
     for process in processes:
 
@@ -108,9 +113,9 @@ def get_wf_minio(workflow_name,job,path):
             return(False)
 
         except:
-            return(False)
+            return(False,"commandLineTool")
 
-    return(True)
+    return(True,'')
 
 def upload_file_minio(file,output_metadata):
 
