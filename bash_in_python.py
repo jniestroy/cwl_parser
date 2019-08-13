@@ -41,7 +41,7 @@ def workflow_main(inputs):
 
         if not valid:
 
-            return({"error":item + " found on Minio"})
+            return({"error":item + " not found on Minio"})
 
         result = workflow_main(['tes',workflow,yaml,path])
 
