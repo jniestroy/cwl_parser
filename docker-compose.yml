@@ -33,6 +33,16 @@ services:
   mongodb:
     image: mongo
     restart: always
+    ports:
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo_secret
+  ors:
+    image: jniestroy/old_ors
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_ROOT_USERNAME=mongo
+      - MONGO_ROOT_PASSWORD=mongo_secret
+      - MONGO_SERVER=mongodb

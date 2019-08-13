@@ -10,7 +10,7 @@ minio_name = os.environ['MINIO_DOCKER_NAME']
 minio_key = os.environ['MINIO_ACCESS_KEY']
 minio_secret = os.environ["MINIO_SECRET_KEY"]
 
-def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
+def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False,id = ''):
 
     if not bytes:
 
@@ -45,7 +45,7 @@ def upload_cwl(cwl,path = '',isWorkflow = False,isJob = False,bytes = False):
     f.seek(0)
 
     try:
-           minioClient.put_object('testbucket', folder + filename, f,size,metadata = {"name":filename})
+           minioClient.put_object('testbucket', folder + filename, f,size,metadata = {"name":filename,'id' = id})
 
     except ResponseError as err:
            return False
@@ -116,7 +116,10 @@ def upload_file_minio(file,output_metadata):
 
     filename = get_filename(file)
 
-    meta = {'name':output_metadata['name']}
+    meta = {
+            'name':output_metadata['name'],
+            'identifier':output_meta['identifier']
+            }
 
     f = open(file,"rb")
 

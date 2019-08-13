@@ -75,17 +75,23 @@ def workflow_main(inputs):
 
     for output in output_meta:
 
-        ###############################
-        #
-        #Post object metadata to mongo
-        #
-        ###############################
+        req = requests.put("https://ors:8080/uid/test/",json = output,verify = False)
 
-        if wf_upload.upload_file_minio(output['path'],output):
-            result['outputs'][output['name']] = {'upload':"success","object_meta":output}
+        if req.json().get('created'):
 
-        else:
-            result['outputs'][output['name']] = {"upload":"failed"}
+                full_id = req.json()['created']['@id']
+
+                _,_,base,namespace,name,id = full_id.split('/')
+
+                output['identifier'] = id
+
+                if wf_upload.upload_file_minio(output['path'],output):
+
+                    result['outputs'][output['name']] = {'upload':"success","object_meta":output}
+
+                else:
+
+                    result['outputs'][output['name']] = {"upload":"failed"}
 
     return(result)
 
