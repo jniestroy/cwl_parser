@@ -93,8 +93,27 @@ def post_wf():
     ####################
 
     if wf_upload.upload_cwl(workflow,isWorkflow = True,bytes = True,id = id):
-
+        commandlineids = []
         for tool in commandTools:
+
+            tool_dict = yaml.safe_load(tool)
+
+            tool_meta = wf_parser.generate_proccess_meta(tool_dict,bytes = True,name=tool.name)
+
+            req = requests.put("https://ors:8080/uid/test/",json = tool_meta,verify = False)
+
+            if req.json().get('created'):
+
+                    full_id = req.json()['created']['@id']
+
+                    _,_,base,namespace,name,id = full_id.split('/')
+
+                    commandlineids.append(id)
+            else:
+
+                result = {"error":"Error minting id for commandLineTool: " + str(tool.name)}
+
+                return(jsonify(result))
 
             if wf_upload.upload_cwl(tool,isWorkflow = False,bytes = True):
 
@@ -112,7 +131,11 @@ def post_wf():
 
         return(jsonify(result))
 
-    result = {"error": "","upload": True,"identifier":id}
+    result = {
+            "upload": True,
+            "workflow identifier":wf_metadata['id'],
+            "commandLineTools Ids":commandlineids
+            }
 
     return(jsonify(result))
 

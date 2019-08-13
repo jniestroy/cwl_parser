@@ -43,6 +43,43 @@ def generate_wf_meta(workflow,path = '',bytes = False,name = ''):
 
     return(meta)
 
+def generate_proccess_meta(workflow,path = '',bytes = False,name = ''):
+
+    meta = {
+
+        "@context":{"wfdesc":"https://wf4ever.github.io/ro/2016-01-28/wfdesc/"},
+        "@type":"wfdesc:Process"
+
+    }
+
+    if bytes:
+        wf_dict = workflow
+        meta['name'] = name
+
+    else:
+
+        try:
+            with open(path + workflow, 'r') as cwl_file:
+                wf_dict = yaml.safe_load(cwl_file)
+                meta['name'] = workflow
+        except:
+            return("commandLineTool File does not Exist")
+    #Grab Inputs into Workflow
+
+    inputs = get_inputs(wf_dict)
+
+    #Gather Worflow Outputs
+
+    outputs = get_outputs(wf_dict)
+
+    meta["wfdesc:hasInput"] = inputs
+
+    meta['wfdesc:hasOutput'] = outputs
+
+    meta['commandRun'] = wf_dict.get('baseCommand')
+
+    return(meta)
+
 def parse_dict_steps(steps,path):
 
     steps_list = []
@@ -131,7 +168,7 @@ def get_outputs(workflow):
 
 def get_inputs(workflow):
 
-    
+
 
     inputs = gather_inputs(workflow)
 
