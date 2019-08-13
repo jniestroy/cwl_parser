@@ -115,7 +115,7 @@ def post_wf():
 
                 return(jsonify(result))
 
-            if wf_upload.upload_cwl(tool,isWorkflow = False,bytes = True):
+            if wf_upload.upload_cwl(tool,isWorkflow = False,bytes = True,id=id):
 
                 continue
 
