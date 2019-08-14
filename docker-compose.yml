@@ -1,7 +1,7 @@
 version: '3'
 services:
   cwlrunner:
-    build: .
+    image: jniestroy/cwl_runner
     ports:
       - "5002:5002"
     environment:
