@@ -18,10 +18,10 @@ steps:
     in:
       file: input_data
     out:
-    - answer
+    - clean_data
   create_fig:
     run: make_fig.cwl
     in:
-      clean: cleandata/answer
+      clean: cleandata/clean_data
     out:
     - figure
